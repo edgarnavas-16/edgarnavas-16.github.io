@@ -30,6 +30,8 @@
   --senal: #E5532D;
   --ancho: 1180px;
   --gutter: clamp(16px, 4vw, 40px);
+  /* Textura: grano de papel, generado en SVG, sin imagen externa. */
+  --grano: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='r'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0.08 0 0 0 0 0.09 0 0 0 0 0.1 0 0 0 0.55 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23r)'/%3E%3C/svg%3E");
 }
 
 * { box-sizing: border-box; }
@@ -44,6 +46,17 @@ body {
   line-height: 1.55;
   font-kerning: normal;
   text-rendering: optimizeLegibility;
+  overflow-x: hidden;
+}
+/* El grano va encima de todo, muy tenue; en las bandas oscuras se aclara por mezcla. */
+body::after {
+  content: ""; position: fixed; inset: 0; pointer-events: none; z-index: 50;
+  background-image: var(--grano); background-size: 220px; opacity: 0.18; mix-blend-mode: multiply;
+}
+.oscura, .sistema, .pie { position: relative; isolation: isolate; }
+.oscura::before, .sistema::before, .pie::before {
+  content: ""; position: absolute; inset: 0; z-index: -1; pointer-events: none;
+  background-image: var(--grano); background-size: 220px; opacity: 0.22; filter: invert(1); mix-blend-mode: screen;
 }
 img, svg { display: block; max-width: 100%; }
 a { color: inherit; text-decoration-thickness: 1.5px; text-underline-offset: 3px; }
@@ -67,7 +80,33 @@ a:focus-visible, button:focus-visible { outline: 3px solid var(--senal); outline
 .nav ul a:hover { text-decoration: underline; }
 
 /* ——— Portada ——— */
-.portada { padding: clamp(56px, 10vw, 128px) 0 clamp(48px, 8vw, 96px); }
+.portada {
+  padding: clamp(40px, 7vw, 96px) 0 clamp(40px, 6vw, 80px);
+  background-image: radial-gradient(circle at 1px 1px, rgba(20,23,27,0.13) 1px, transparent 1.4px);
+  background-size: 22px 22px;
+  background-position: -11px -11px;
+}
+.portada .envoltura { display: grid; grid-template-columns: minmax(0, 1.08fr) minmax(0, 1fr); gap: clamp(24px, 4vw, 56px); align-items: center; }
+.portada-texto { position: relative; z-index: 2; }
+
+/* La escena: cinco cúmulos, uno por capa del sistema */
+.escena { margin: 0; position: relative; aspect-ratio: 1 / 1.08; min-height: 360px; }
+.escena canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+.escena.sin-webgl canvas { display: none; }
+.rotulo {
+  position: absolute; left: 0; top: 0; white-space: nowrap;
+  margin: 0; padding: 5px 10px 5px 9px;
+  font-weight: 700; font-size: 13px; letter-spacing: 0.06em; text-transform: uppercase;
+  text-decoration: none; color: var(--tinta);
+  background: var(--papel); border: 1.5px solid var(--tinta); border-radius: 2px;
+  transition: background .25s, color .25s, border-color .25s;
+  will-change: transform;
+}
+.rotulo.activo, .rotulo:hover, .rotulo:focus-visible { background: var(--tinta); color: var(--papel); border-color: var(--tinta); }
+.rotulo.activo::before { content: ""; display: inline-block; width: 7px; height: 7px; border-radius: 50%; background: var(--senal); margin-right: 8px; transform: translateY(-1px); }
+.escena.sin-webgl .rotulo { position: static; display: inline-block; margin: 0 8px 8px 0; transform: none !important; }
+.escena.sin-webgl { aspect-ratio: auto; min-height: 0; }
+
 .ceja { font-weight: 700; font-size: 14px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--gris); margin: 0 0 22px; display: flex; align-items: center; gap: 12px; }
 .ceja::before { content: ""; width: 28px; height: 3px; background: var(--senal); }
 h1 {
@@ -75,12 +114,12 @@ h1 {
   font-stretch: 116%;
   letter-spacing: -0.042em;
   line-height: 0.96;
-  font-size: clamp(42px, 7.2vw, 100px);
-  margin: 0 0 32px;
+  font-size: clamp(38px, 4.7vw, 70px);
+  margin: 0 0 28px;
   max-width: 15ch;
 }
 h1 em { font-style: normal; color: var(--senal); }
-.entrada { font-size: clamp(18px, 1.6vw, 21px); max-width: 60ch; margin: 0 0 40px; color: #2A2E33; }
+.entrada { font-size: clamp(17px, 1.4vw, 19.5px); max-width: 58ch; margin: 0 0 34px; color: #2A2E33; }
 .acciones { display: flex; flex-wrap: wrap; gap: 14px; }
 .boton {
   display: inline-flex; align-items: center; gap: 10px;
@@ -98,6 +137,7 @@ h1 em { font-style: normal; color: var(--senal); }
 .cifra { padding: 36px 24px 36px 0; }
 .cifra + .cifra { padding-left: 24px; border-left: 1px solid var(--linea); }
 .cifra .mono { font-size: clamp(34px, 3.6vw, 48px); font-weight: 600; letter-spacing: -0.04em; line-height: 1; display: block; margin-bottom: 14px; }
+.cifra .sep { margin-left: -0.22em; letter-spacing: -0.3em; }
 .cifra p { margin: 0; font-size: 15.5px; line-height: 1.45; color: var(--gris); }
 
 /* ——— Secciones ——— */
@@ -108,6 +148,19 @@ h2 {
   font-size: clamp(34px, 4.8vw, 60px); margin: 0 0 24px; max-width: 18ch;
 }
 .intro { max-width: 62ch; margin: 0 0 56px; font-size: 19px; }
+
+/* ——— Qué se monta: las cinco capas ——— */
+.capas { display: grid; grid-template-columns: repeat(3, 1fr); border-top: 2px solid var(--tinta); border-left: 1px solid var(--linea); }
+.capa { display: flex; flex-direction: column; padding: 28px 28px 32px; border-right: 1px solid var(--linea); border-bottom: 1px solid var(--linea); background: rgba(243,241,236,0.6); scroll-margin-top: 24px; }
+.capa:target { box-shadow: inset 0 0 0 2px var(--senal); }
+.capa-num { display: flex; align-items: center; gap: 10px; margin: 0 0 18px; font-weight: 700; font-size: 13px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--gris); }
+.capa-num i { width: 12px; height: 12px; border-radius: 50%; background: var(--tinta); box-shadow: 16px 0 0 -3px var(--niebla), 8px 10px 0 -4px var(--gris); margin-right: 18px; }
+.capa h3 { font-weight: 800; font-stretch: 105%; font-size: 25px; line-height: 1.12; letter-spacing: -0.022em; margin: 0 0 12px; }
+.capa p { margin: 0 0 18px; font-size: 16.5px; }
+.capa .tecnico { margin: auto 0 0; padding-top: 14px; border-top: 1px dashed var(--linea); font-size: 12.5px; color: var(--gris); letter-spacing: -0.01em; }
+.capa-cierre { background: var(--tinta); color: var(--papel); display: flex; flex-direction: column; justify-content: space-between; gap: 24px; }
+.capa-cierre p { font-weight: 700; font-stretch: 105%; font-size: 21px; line-height: 1.3; letter-spacing: -0.015em; margin: 0; }
+.capa-cierre a { color: var(--papel); font-weight: 700; text-decoration-color: var(--senal); text-decoration-thickness: 2px; }
 
 /* Banda oscura — el 30 % secundario */
 .oscura { background: var(--tinta); color: var(--papel); }
@@ -172,6 +225,9 @@ h2 {
 
 /* ——— Pantalla chica ——— */
 @media (max-width: 960px) {
+  .portada .envoltura { grid-template-columns: 1fr; }
+  .escena { aspect-ratio: 1 / 0.82; min-height: 300px; max-width: 640px; width: 100%; justify-self: center; }
+  .capas { grid-template-columns: 1fr 1fr; }
   .ruta { grid-template-columns: 1fr 1fr; row-gap: 56px; }
   .ruta::before { display: none; }
   .nivel:nth-child(3) { padding-left: 0; border-left: 0; }
@@ -181,6 +237,10 @@ h2 {
   .sistema .envoltura { grid-template-columns: 1fr; }
 }
 @media (max-width: 640px) {
+  .capas { grid-template-columns: 1fr; }
+  .capa { padding: 24px 20px 26px; }
+  .escena { aspect-ratio: 1 / 1; }
+  .rotulo { font-size: 11px; padding: 4px 8px; }
   body { font-size: 17px; }
   .nav ul { display: none; }
   .ruta { grid-template-columns: 1fr; }
