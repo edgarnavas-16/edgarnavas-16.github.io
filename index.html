@@ -2,11 +2,12 @@
 <html lang="es">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#F3F1EC">
 <title>Edgar Navas · IA aplicada</title>
-<meta name="description" content="Le monto en su Mac el sistema de IA que uso todos los días: notas propias, un asistente con su contexto, modelos que corren en su equipo y agentes que trabajan solos.">
+<meta name="description" content="Le monto en su computadora, Mac o Windows, el sistema de IA que uso todos los días: notas propias, un asistente con su contexto, modelos que corren en su equipo y agentes que trabajan solos.">
 <meta property="og:title" content="Edgar Navas · IA aplicada">
-<meta property="og:description" content="La IA que uso todos los días vive en mi Mac. Se la monto en el suyo.">
+<meta property="og:description" content="La IA que uso todos los días vive en mi Mac. Se la monto en su computadora.">
 <meta property="og:type" content="website">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <link rel="preload" href="/fonts/archivo.woff2" as="font" type="font/woff2" crossorigin>
@@ -34,15 +35,15 @@
   <section class="portada">
     <div class="envoltura">
       <div class="portada-texto">
-        <p class="ceja">Consultoría en IA aplicada · Costa Rica</p>
-        <h1>La IA que uso todos los días vive en mi Mac. <em>Se la monto en el suyo.</em></h1>
-        <p class="entrada">Durante el MBA en INCAE armé, a prueba y error, un sistema propio: notas que no se pierden, un asistente que conoce mi trabajo, modelos que corren en la laptop sin mandar nada a la nube y agentes que revisan el correo antes de que yo lo abra. Me equivoqué bastante y lo tengo medido. La consultoría es montarle a usted la parte que funcionó, en su equipo y con sus datos, y dejarle la forma de comprobar que funciona.</p>
+        <p class="ceja">Consultoría en IA aplicada · Mac y Windows</p>
+        <h1>La IA que uso todos los días vive en mi Mac. <em>Se la monto en su computadora.</em></h1>
+        <p class="entrada">Durante el MBA de INCAE armé, a prueba y error, un sistema propio: notas que no se pierden, un asistente que conoce mi trabajo, modelos que corren en la laptop sin mandar nada a la nube y agentes que ordenan el correo antes de que yo lo abra. Me equivoqué bastante y lo tengo medido. La consultoría es montarle a usted la parte que funcionó, en su equipo y con sus datos, y dejarle la forma de comprobar que funciona.</p>
         <div class="acciones">
           <a class="boton" href="mailto:navasedgar18@gmail.com?subject=Consultor%C3%ADa%20de%20IA">Pedir una primera conversación</a>
           <a class="boton secundario" href="#montaje">Ver qué se monta</a>
         </div>
       </div>
-      <figure class="escena" aria-label="Diagrama del sistema: cinco capas conectadas entre sí">
+      <figure class="escena escena-portada" aria-label="Diagrama del sistema: cinco capas conectadas entre sí">
         <canvas></canvas>
         <a class="rotulo" href="#capa-notas">Notas</a>
         <a class="rotulo" href="#capa-asistente">Asistente</a>
@@ -55,10 +56,10 @@
 
   <div class="cifras" aria-label="El sistema en cifras">
     <div class="envoltura">
-      <div class="cifra"><span class="mono">1<span class="sep">.</span>644</span><p>hilos de correo ordenó mi agente en un día, con un modelo que corre en la laptop. Archivó 1.206 sin que yo abriera uno.</p></div>
-      <div class="cifra"><span class="mono">4</span><p>agentes trabajan solos en mi Mac: correo, clases, tareas pendientes y la salud del propio equipo. Ninguno envía nada sin mi orden.</p></div>
-      <div class="cifra"><span class="mono">401</span><p>tokens gasta hoy cada consulta automática de la mañana. Gastaba 23.700, hasta que dejé de cargarle herramientas que no usaba.</p></div>
-      <div class="cifra"><span class="mono">237×</span><p>más cara salía una herramienta de moda que probé y descarté. También le cuento lo que no funcionó.</p></div>
+      <div class="cifra"><span class="mono" data-hasta="1644">1<span class="sep">.</span>644</span><p>hilos de correo ordenó mi agente en un día, con un modelo que corre en la laptop. Archivó 1.206 sin que yo abriera uno.</p></div>
+      <div class="cifra"><span class="mono" data-hasta="4">4</span><p>agentes trabajan solos en mi Mac: correo, clases, tareas pendientes y la salud del propio equipo. Ninguno envía nada sin mi orden.</p></div>
+      <div class="cifra"><span class="mono" data-hasta="401">401</span><p>tokens carga hoy cada llamada automática a Claude antes de empezar a trabajar. Cargaba 23.700, hasta que dejé de pasarle herramientas que no usaba.</p></div>
+      <div class="cifra"><span class="mono" data-hasta="237" data-sufijo="×">237×</span><p>más cara salía una herramienta de moda que probé y descarté. También le cuento lo que no funcionó.</p></div>
     </div>
   </div>
 
@@ -66,42 +67,52 @@
     <div class="envoltura">
       <p class="ceja">Qué se monta</p>
       <h2>Cinco capas, en su equipo y a su nombre.</h2>
-      <p class="intro">No le vendo una aplicación. Le monto sobre su Mac las mismas piezas que uso yo, conectadas a sus cuentas y a sus datos, y se las dejo escritas para que las pueda mantener sin mí. Se monta la parte que a usted le sirve; nadie necesita las cinco el primer día.</p>
+      <p class="intro">No le vendo una aplicación. Le monto en su computadora las mismas piezas que uso yo, conectadas a sus cuentas y a sus datos, y se las dejo escritas para que las pueda mantener sin mí. Se monta la parte que a usted le sirve; nadie necesita las cinco el primer día.</p>
+      <div class="montaje-cuerpo">
+      <figure class="escena montaje-escena" aria-hidden="true">
+        <canvas></canvas>
+        <span class="rotulo">Notas</span>
+        <span class="rotulo">Asistente</span>
+        <span class="rotulo">Modelos locales</span>
+        <span class="rotulo">Agentes</span>
+        <span class="rotulo">Atajos</span>
+      </figure>
       <div class="capas">
-        <article class="capa" id="capa-notas">
+        <article class="capa" id="capa-notas" data-cumulo="0">
           <p class="capa-num"><i aria-hidden="true"></i>Notas</p>
           <h3>Una memoria que es suya</h3>
           <p>Lo que aprendo y decido queda en archivos de texto en mi propio disco, en una bóveda que el asistente puede leer. No depende de ninguna aplicación: si mañana cambio de herramienta, las notas se quedan conmigo. Hoy son casi mil.</p>
           <p class="tecnico mono">Obsidian · Markdown · git</p>
         </article>
-        <article class="capa" id="capa-asistente">
+        <article class="capa" id="capa-asistente" data-cumulo="1">
           <p class="capa-num"><i aria-hidden="true"></i>Asistente</p>
           <h3>Un asistente que conoce su trabajo</h3>
           <p>Claude trabaja dentro de mis carpetas con instrucciones escritas una sola vez: cómo escribo, qué no debe tocar y qué tiene que verificar antes de entregarme algo. Lo que repito se guarda como una habilidad, y un aviso me dice cuándo una conversación se está volviendo cara.</p>
           <p class="tecnico mono">Claude Code · CLAUDE.md · skills · hooks</p>
         </article>
-        <article class="capa" id="capa-local">
+        <article class="capa" id="capa-local" data-cumulo="2">
           <p class="capa-num"><i aria-hidden="true"></i>Modelos locales</p>
           <h3>IA que no sale de su equipo</h3>
-          <p>Para leer volumen, como cientos de correos, uso modelos que corren en la laptop. El texto no viaja a ninguna nube y la consulta no cuesta nada. Claude queda para lo que de verdad pide criterio.</p>
+          <p>Para leer volumen, como cientos de correos, uso modelos que corren en la laptop. El texto no viaja a ninguna nube y no se paga por consulta. Claude queda para lo que de verdad pide criterio.</p>
           <p class="tecnico mono">Ollama · Qwen 3.5 9B · Gemma 4 12B · Whisper</p>
         </article>
-        <article class="capa" id="capa-agentes">
+        <article class="capa" id="capa-agentes" data-cumulo="3">
           <p class="capa-num"><i aria-hidden="true"></i>Agentes</p>
           <h3>Tareas que corren solas</h3>
           <p>Mis agentes trabajan sin que yo los abra: uno ordena el correo, otro me resume lo que pasó en clase, otro revisa las tareas pendientes y otro vigila que el resto no haya fallado. Me avisan con un número en la barra de menú y dejan borradores, nunca envíos.</p>
           <p class="tecnico mono">launchd · Python · SwiftBar</p>
         </article>
-        <article class="capa" id="capa-atajos">
+        <article class="capa" id="capa-atajos" data-cumulo="4">
           <p class="capa-num"><i aria-hidden="true"></i>Atajos</p>
           <h3>Todo a dos teclas</h3>
-          <p>Cada función del sistema tiene su comando y su enlace directo. Abrir el plan de la semana, despertar a un agente o buscar en las notas es escribir dos letras, sin buscar entre ventanas.</p>
+          <p>Cada función del sistema tiene su comando y su enlace directo. Abrir el tablero de la semana, correr un agente o buscar en las notas es escribir dos letras, sin buscar entre ventanas.</p>
           <p class="tecnico mono">Raycast · 16 comandos propios</p>
         </article>
         <aside class="capa capa-cierre">
-          <p>¿Por qué en su Mac y no en una plataforma? Porque lo que corre en su equipo es suyo, se puede revisar y no cambia de precio ni de reglas de un mes para otro.</p>
+          <p>¿Por qué en su computadora y no en una plataforma? Porque lo que corre en su equipo se puede revisar. Las suscripciones cambian de precio y de reglas; sus notas, sus instrucciones y sus agentes se quedan con usted.</p>
           <a href="mailto:navasedgar18@gmail.com?subject=Consultor%C3%ADa%20de%20IA">Contarme qué usa hoy</a>
         </aside>
+      </div>
       </div>
     </div>
   </section>
@@ -124,7 +135,7 @@
           <div class="hito" aria-hidden="true"></div>
           <div class="numero">02</div>
           <p class="grado">Intermedio</p>
-          <h3>Su Mac ordenado para la IA</h3>
+          <h3>Su computadora ordenada para la IA</h3>
           <p>Para quien ya lo usa a diario y pasa el día copiando y pegando entre ventanas. Montamos la bóveda de notas y los atajos, y conectamos el asistente a su correo y su calendario.</p>
           <p class="sale"><b>Sale con</b> la bóveda y los atajos funcionando, y la lista de lo que no conviene delegar.</p>
         </article>
@@ -145,7 +156,7 @@
           <p class="sale"><b>Sale con</b> un piloto acotado, con su métrica de éxito y sus reglas de gobierno.</p>
         </article>
       </div>
-      <p class="formato">Las sesiones son por videollamada, en español o en inglés, con su pantalla compartida. El montaje es sobre macOS, que es donde lo uso yo. El alcance de cada consultoría se acuerda en una primera conversación de veinte minutos.</p>
+      <p class="formato">Las sesiones son por videollamada, en español o en inglés, con su pantalla compartida. Yo trabajo en Mac y ahí cada paso está probado; en Windows casi todo tiene su equivalente, y si algo no lo tiene se lo digo antes de empezar. El alcance de cada consultoría se acuerda en una primera conversación de veinte minutos.</p>
     </div>
   </section>
 
@@ -173,7 +184,7 @@
           <span class="mono">Septiembre 2026</span>
           <div>
             <h3>El respaldo que fallaba sin avisar</h3>
-            <p>En una revisión del Mac encontré que el respaldo semanal llevaba cuatro domingos fallando. Los respaldos habían bajado de 3,5 GB a 577 MB y nada me lo había dicho. Por eso ahora un agente revisa cada dos horas que las demás tareas hayan terminado bien, y lo marca en rojo hasta que quede arreglado.</p>
+            <p>En una revisión del Mac encontré que el respaldo semanal llevaba cuatro domingos fallando. Los respaldos habían bajado de 3,5 GB a 577 MB y nada me lo había dicho. Hoy un agente revisa cada dos horas que las demás tareas hayan terminado bien, y lo tiene marcado en rojo hasta que quede arreglado.</p>
           </div>
         </div>
         <div class="paso hoy">
@@ -206,7 +217,7 @@
     <div class="envoltura">
       <p class="ceja">Contacto</p>
       <h2>Cuénteme qué quiere resolver.</h2>
-      <p class="intro">Escríbame en qué trabaja, qué usa hoy y qué le gustaría que la IA hiciera por usted. Le respondo con el nivel que le recomiendo y por qué.</p>
+      <p class="intro">Escríbame en qué trabaja, si usa Mac o Windows y qué le gustaría que la IA hiciera por usted. Le respondo con el nivel que le recomiendo y por qué.</p>
       <a class="correo" href="mailto:navasedgar18@gmail.com?subject=Consultor%C3%ADa%20de%20IA">navasedgar18@gmail.com</a>
       <p class="otros">También estoy en <a href="https://www.linkedin.com/in/edgar-navas">LinkedIn</a>, donde cuento lo que voy construyendo.</p>
     </div>
@@ -224,10 +235,6 @@
   </div>
 </footer>
 
-<script type="module">
-  import { iniciar } from "/js/escena.js";
-  const caja = document.querySelector(".escena");
-  iniciar(caja.querySelector("canvas"), [...caja.querySelectorAll(".rotulo")]);
-</script>
+<script type="module" src="/js/pagina.js"></script>
 </body>
 </html>

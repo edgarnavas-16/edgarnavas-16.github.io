@@ -66,10 +66,16 @@ a:focus-visible, button:focus-visible { outline: 3px solid var(--senal); outline
 .saltar { position: absolute; left: -999px; top: 8px; background: var(--tinta); color: var(--papel); padding: 8px 14px; z-index: 10; }
 .saltar:focus { left: 8px; }
 
-.envoltura { max-width: var(--ancho); margin: 0 auto; padding: 0 var(--gutter); }
+.envoltura { max-width: var(--ancho); margin: 0 auto; padding: 0 max(var(--gutter), env(safe-area-inset-right)) 0 max(var(--gutter), env(safe-area-inset-left)); }
 
 /* ——— Navegación ——— */
-.nav { border-bottom: 1px solid var(--linea); }
+/* Barra fija y translúcida, como vidrio esmerilado sobre el papel */
+.nav {
+  position: sticky; top: 0; z-index: 40;
+  border-bottom: 1px solid rgba(20,23,27,0.1);
+  background: rgba(243,241,236,0.8);
+  -webkit-backdrop-filter: saturate(1.6) blur(16px); backdrop-filter: saturate(1.6) blur(16px);
+}
 .nav .envoltura { display: flex; align-items: center; justify-content: space-between; gap: 24px; min-height: 72px; }
 .marca { display: flex; align-items: baseline; gap: 12px; text-decoration: none; }
 .marca b { font-weight: 850; font-stretch: 112%; letter-spacing: -0.03em; font-size: 21px; }
@@ -118,6 +124,7 @@ h1 {
   margin: 0 0 28px;
   max-width: 15ch;
 }
+h1, h2, h3 { text-wrap: balance; }
 h1 em { font-style: normal; color: var(--senal); }
 .entrada { font-size: clamp(17px, 1.4vw, 19.5px); max-width: 58ch; margin: 0 0 34px; color: #2A2E33; }
 .acciones { display: flex; flex-wrap: wrap; gap: 14px; }
@@ -141,13 +148,29 @@ h1 em { font-style: normal; color: var(--senal); }
 .cifra p { margin: 0; font-size: 15.5px; line-height: 1.45; color: var(--gris); }
 
 /* ——— Secciones ——— */
-section { scroll-margin-top: 16px; }
+section { scroll-margin-top: 72px; }
 .bloque { padding: clamp(72px, 10vw, 128px) 0; }
 h2 {
   font-weight: 850; font-stretch: 110%; letter-spacing: -0.035em; line-height: 1;
   font-size: clamp(34px, 4.8vw, 60px); margin: 0 0 24px; max-width: 18ch;
 }
 .intro { max-width: 62ch; margin: 0 0 56px; font-size: 19px; }
+
+/* ——— Aparición al hacer scroll (solo con JS y sin «reducir movimiento») ——— */
+.js .revela { opacity: 0; transform: translateY(22px); transition: opacity .7s cubic-bezier(.2,.7,.2,1), transform .7s cubic-bezier(.2,.7,.2,1); }
+.js .revela.visto { opacity: 1; transform: none; }
+.cifras .revela:nth-child(2), .ruta .revela:nth-child(2) { transition-delay: .08s; }
+.cifras .revela:nth-child(3), .ruta .revela:nth-child(3) { transition-delay: .16s; }
+.cifras .revela:nth-child(4), .ruta .revela:nth-child(4) { transition-delay: .24s; }
+
+/* ——— Qué se monta: escena fija al costado y las capas a la derecha ——— */
+.montaje-cuerpo { display: grid; grid-template-columns: minmax(0, 0.95fr) minmax(0, 1.05fr); gap: clamp(28px, 4vw, 64px); align-items: start; }
+.montaje-escena { position: sticky; top: 96px; aspect-ratio: 1 / 1; min-height: 0; }
+.montaje-escena .rotulo { pointer-events: none; }
+.montaje-cuerpo .capas { grid-template-columns: 1fr; }
+.montaje-cuerpo .capa { padding: 34px 32px 34px; transition: background .35s, box-shadow .35s; }
+.montaje-cuerpo .capa.en-foco { background: #FBFAF7; box-shadow: inset 4px 0 0 var(--senal); }
+.montaje-cuerpo .capa.en-foco .capa-num { color: var(--tinta); }
 
 /* ——— Qué se monta: las cinco capas ——— */
 .capas { display: grid; grid-template-columns: repeat(3, 1fr); border-top: 2px solid var(--tinta); border-left: 1px solid var(--linea); }
@@ -225,6 +248,10 @@ h2 {
 
 /* ——— Pantalla chica ——— */
 @media (max-width: 960px) {
+  .montaje-cuerpo { grid-template-columns: 1fr; }
+  .montaje-escena { display: none; }
+  .montaje-cuerpo .capas { grid-template-columns: 1fr 1fr; }
+  .montaje-cuerpo .capa { padding: 28px 24px 30px; }
   .portada .envoltura { grid-template-columns: 1fr; }
   .escena { aspect-ratio: 1 / 0.82; min-height: 300px; max-width: 640px; width: 100%; justify-self: center; }
   .capas { grid-template-columns: 1fr 1fr; }
@@ -237,12 +264,16 @@ h2 {
   .sistema .envoltura { grid-template-columns: 1fr; }
 }
 @media (max-width: 640px) {
-  .capas { grid-template-columns: 1fr; }
+  .capas, .montaje-cuerpo .capas { grid-template-columns: 1fr; }
+  .nav ul { display: flex; gap: 0; }
+  .nav ul li:not(:last-child) { display: none; }
+  .nav ul a { padding: 8px 14px; border: 1.5px solid var(--tinta); border-radius: 999px; font-size: 14px; }
+  .nav .envoltura { min-height: 60px; }
+  .marca span { display: none; }
   .capa { padding: 24px 20px 26px; }
   .escena { aspect-ratio: 1 / 1; }
   .rotulo { font-size: 11px; padding: 4px 8px; }
   body { font-size: 17px; }
-  .nav ul { display: none; }
   .ruta { grid-template-columns: 1fr; }
   .nivel, .nivel + .nivel { padding: 0; border-left: 0; }
   .hito { margin-bottom: 24px; }
@@ -252,3 +283,6 @@ h2 {
   .ficha { padding: 24px 20px; }
 }
 @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+/* Pantallas táctiles: el grano fijo sin mezcla, que en Safari de iPhone encarece el scroll */
+@media (hover: none) { body::after { mix-blend-mode: normal; opacity: 0.1; } }
+@media print { .revela { opacity: 1 !important; transform: none !important; } .nav { position: static; } }

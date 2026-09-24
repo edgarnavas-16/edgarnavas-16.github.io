@@ -26,7 +26,7 @@ const gauss = () => {
   return Math.sqrt(-2 * Math.log(u)) * Math.cos(2 * Math.PI * v);
 };
 
-export function iniciar(lienzo, rotulos) {
+export function iniciar(lienzo, rotulos = [], { auto = true } = {}) {
   let renderer;
   try {
     renderer = new WebGLRenderer({ canvas: lienzo, antialias: true, alpha: true, powerPreference: "low-power" });
@@ -145,6 +145,7 @@ export function iniciar(lienzo, rotulos) {
     col.needsUpdate = true;
     rotulos.forEach((r, i) => r.classList.toggle("activo", i === k));
   }
+  let externo = -1;
 
   const quieto = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   let objetivoX = 0, objetivoY = 0, fijado = -1;
@@ -176,6 +177,7 @@ export function iniciar(lienzo, rotulos) {
   function ubicarRotulos() {
     const w = caja.clientWidth, h = caja.clientHeight;
     hubs.forEach((c, i) => {
+      if (!rotulos[i]) return;
       v.copy(c).applyMatrix4(mundo.matrixWorld).project(camara);
       const x = ((v.x + 1) / 2) * w, y = ((1 - v.y) / 2) * h;
       const ancho = rotulos[i].offsetWidth;
@@ -196,7 +198,9 @@ export function iniciar(lienzo, rotulos) {
     const t = (ahora - t0) / 1000;
     mundo.rotation.y += (t * 0.07 + objetivoY - mundo.rotation.y) * 0.05;
     mundo.rotation.x += (objetivoX - 0.12 - mundo.rotation.x) * 0.05;
-    if (fijado < 0) activar(Math.floor(t / 3.2) % CUMULOS.length);
+    if (fijado >= 0) activar(fijado);
+    else if (auto) activar(Math.floor(t / 3.2) % CUMULOS.length);
+    else activar(externo);
     matPuentes.opacity = 0.3 + 0.2 * Math.sin(t * 1.3);
     mundo.updateMatrixWorld();
     renderer.render(escena, camara);
@@ -214,4 +218,11 @@ export function iniciar(lienzo, rotulos) {
   } else {
     pedir();
   }
+  // Control desde afuera: la sección «Qué se monta» elige el cúmulo al hacer scroll.
+  return {
+    elegir(k) {
+      externo = k;
+      if (quieto) { activar(k); renderer.render(escena, camara); ubicarRotulos(); }
+    },
+  };
 }
